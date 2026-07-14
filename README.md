@@ -153,3 +153,10 @@ LinkedIn:
 ---
 
 ## ⭐ If you like this project, don't forget to star the repository.
+## Disclaimer
+
+This project is created for educational purposes only.
+
+It is not affiliated with Netflix.
+
+Movie data is provided by TMDB API.

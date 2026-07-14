@@ -21,10 +21,6 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 });
 
-
-document.querySelector(".play-btn").addEventListener("click", () => {
-    alert("Movie will play soon...");
-});
 const API_KEY = "25704c08dd525cf51b86c76a9bb57758";
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -156,6 +152,79 @@ window.addEventListener("click", (event) => {
     }
 
 });
+async function loadHeroBanner() {
+
+    try {
+
+        const response = await fetch(
+            `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+        );
+
+        const data = await response.json();
+
+        const movie =
+            data.results[
+                Math.floor(Math.random() * data.results.length)
+            ];
+
+        document.getElementById("heroBanner").style.backgroundImage =
+            `linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.9)),
+            url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`;
+
+        document.getElementById("heroBanner").style.backgroundSize =
+            "cover";
+
+        document.getElementById("heroBanner").style.backgroundPosition =
+            "center";
+
+        document.getElementById("bannerTitle").innerText =
+            movie.title;
+
+        document.getElementById("bannerOverview").innerText =
+            movie.overview;
+
+        document.getElementById("bannerPlay").onclick = () => {
+
+    openTrailer(movie.id);
+
+};
+        
+
+        document.getElementById("bannerInfo").onclick = () => {
+
+    document.getElementById("watchTrailerBtn").onclick = () => {
+        openTrailer(movie.id);
+    };
+
+    document.getElementById("addToListBtn").onclick = () => {
+        addToMyList(movie);
+    };
+
+    document.getElementById("movieModal").style.display = "flex";
+
+    document.getElementById("modalPoster").src =
+        IMAGE_URL + movie.poster_path;
+
+    document.getElementById("modalTitle").innerText =
+        movie.title;
+
+    document.getElementById("modalRating").innerText =
+        movie.vote_average;
+
+    document.getElementById("modalRelease").innerText =
+        movie.release_date;
+
+    document.getElementById("modalOverview").innerText =
+        movie.overview;
+
+};
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
 async function searchMovies() {
 
     const query = document.getElementById("searchInput").value.trim();
@@ -270,3 +339,4 @@ function addToMyList(movie) {
     alert("Movie Added to My List ❤️");
 
 }
+loadHeroBanner();
